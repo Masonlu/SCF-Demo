@@ -1,14 +1,14 @@
-##使用SCF实现定时拨测和发送告警邮件
+## 使用SCF实现定时拨测和发送告警邮件
 
 在本Demo中，我们用到了无服务器云函数 SCF，消息队列 CMQ。其中，云函数 SCF2：PlayCheck 用来进行定时拨测，在拨测失败时写失败信息到 CMQ主题订阅：SendEmail，CMQ 会自动触发云函数 SCF1：SendEmail 来发送邮件。发邮件功能和拨测功能也可以在一个函数中实现，这里想要演示消息队列 CMQ 的使用方法，同时使用 CMQ 可以解耦拨测功能和发邮件功能，便于维护。
 
 
-###步骤一 创建 CMQ 主题订阅
+### 步骤一 创建 CMQ 主题订阅
 
 首先要到消息队列 CMQ 的控制台创建一个 主题订阅，我们可以命名为 SendEmail，并选择“北京”地域。
 ![](https://main.qcloudimg.com/raw/e9b452f7cdeeb45c2e91e27e1634c5f5.png)
 
-###步骤二 创建云函数 SCF1：SendEmail
+### 步骤二 创建云函数 SCF1：SendEmail
 在这里，可以直接前往云函数 SCF 的控制台，选择地域“北京”，点击创建函数，命名函数为 SendEmail，函数超时时间修改为5s，内存默认128M即可。点击“下一步”，在“函数代码”的编辑框中，可以直接复制如下代码：
 ```
 # -*- coding: utf8 -*-
@@ -64,7 +64,7 @@ def main_handler(event, context):
 
 点击“下一步”，添加触发方式为“CMQ主题订阅触发”，选择步骤一中创建的Topic：SendEmail。先点击“保存”，再点击“完成”。
 
-###步骤三 测试 CMQ 主题和 SendEmail 函数的连通性
+### 步骤三 测试 CMQ 主题和 SendEmail 函数的连通性
 
 完成SendEmail函数创建后，可以先在“函数代码”界面的右上角，点击“测试”，选择“CMQ Topic 事件模板”，并把如下代码复制粘贴到模板的代码框中，点击“测试运行”查看函数运行日志。
 其中 “msgBody” 字段内， fromAddr，toAdd的字段，需要根据您自身邮箱地址进行修改，建议可以修改为相同地址，自身邮箱向自身邮箱内发送邮件，以便测试邮件发送的正确性。
@@ -103,7 +103,7 @@ def main_handler(event, context):
 ```
 最后回到云函数控制台，查看 SendEmail 函数的执行日志，并前往邮箱查看是否收到了邮件。
 
-###步骤四 创建云函数 SCF2：PlayCheck
+### 步骤四 创建云函数 SCF2：PlayCheck
 
 首先确保在您的系统中已经安装好了python运行环境，然后在本地创建需要放置函数代码的文件夹，[点我](http://cmqsdk-10016717.cossh.myqcloud.com/qc_cmq_python_sdk_V1.0.4.zip?_ga=1.90614994.954607454.1530621311)下载 cmq python sdk，解压后，把文件夹“cmq”复制到刚创建好的函数代码文件夹的根目录下。
 注意：请在“cmq”文件夹中找到“cmq_tool.py”文件，打开后，把 log_file="CMQ_python_sdk.log"（如下图所示位置） 修改为 log_file="/tmp/CMQ_python_sdk.log" 并保存。因为本次 Demo 会在 SCF 中使用cmq sdk,而 cmq sdk发送消息时会在本地创建log，所以修改路径为云函数的本地临时存储路径tmp。
@@ -198,7 +198,7 @@ def main_handler(event, context):
 if __name__ == '__main__':
     main_handler("", "")
 ```
-注意：
+**注意**
 - 在使用本段代码的时候，需要把 secret_id、secret_key 替换为您自己的 secret_id和secret_key 后方能使用，您可以在“账号信息”中查看对应信息。另外 topic_name 需要和您在步骤一中创建的 topic 保持一致；
 - 还请把 email_notify_list 中的地址替换为您想要通知的邮箱列表，可放置一个，也可放置多个；
 - fromAddr 是发出告警邮件的邮箱，还请根据您自身设置的邮箱地址进行修改。
@@ -210,7 +210,7 @@ if __name__ == '__main__':
 - 打包文件为 Play_Check 文件夹中的 cmq 文件夹和 Play_Check.py 文件
 - 在“函数代码”中需修改secret_id、secret_key、topic_name、email_notify_list、fromAddr等字段并保存。
 
-###步骤五 测试函数功能
+### 步骤五 测试函数功能
 PlayCheck 函数部署完成后，可以在“函数代码”的右上角点击“测试”，默认使用“Hello World 事件模板”即可，点击“测试运行”查看运行日志，函数正常执行成功之后，您应该可以收到主题为“Please note: PlayCheck Error 拨测地址异常，请检查”的告警邮件。
 函数测试成功后，您可以给 PlayCheck 函数添加定时触发器，那么一个完整的播测+邮件告警系统就部署完成了。您也可以根据自身业务的需求，DIY 其他的拨测和告警使用方法。
 

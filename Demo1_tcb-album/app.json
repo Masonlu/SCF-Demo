@@ -1,0 +1,14 @@
+{
+    "pages": [
+        "pages/album/album",
+        "pages/index/index"
+    ],
+
+    "window": {
+        "backgroundTextStyle": "dark",
+        "navigationBarBackgroundColor": "#373b3e",
+        "navigationBarTitleText": "相册回收站",
+        "windowBackground": "#1c1b16",
+        "navigationBarTextStyle": "white"
+    }
+}

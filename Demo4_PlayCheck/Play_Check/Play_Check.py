@@ -15,8 +15,8 @@ logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
 
 #使用 cmq 所需的鉴权信息
-secret_id = u'********'   # 请替换为您的 SecretId
-secret_key = u'********'  # 请替换为您的 SecretKey
+secret_id = '********'   # 请替换为您的 SecretId
+secret_key = '********'  # 请替换为您的 SecretKey
 topic_name = "SendEmail"  # 请替换为您的 Topic 名称
 endpoint = "http://cmq-topic-bj.api.qcloud.com"
 

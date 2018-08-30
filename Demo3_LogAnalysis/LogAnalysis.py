@@ -11,11 +11,11 @@ import pymysql.cursors
 import logging
 
 # MySql数据库
-Host='bj-cdb-cj9w3q53.sql.tencentcdb.com'
-User='root'
-Password='tencent12345'
+Host='******' #如bj-cdb-cj9w3q53.sql.tencentcdb.com
+User='xxxxx'
+Password='xxxxx'
 Port= 63054
-DB=u'SCF_Demo'
+DB=u'******' # 如SCF_Demo
 
 # COS
 appid = ********  # 请替换为您的 APPID

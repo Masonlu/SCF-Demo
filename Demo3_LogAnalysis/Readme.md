@@ -9,12 +9,7 @@
 
 ### 步骤二 创建 MySQL数据库
 
-由于数据库需要花钱购买，您可以选择在北京地域购买最便宜的[“云数据库MySQL入门机型”](https://cloud.tencent.com/act/event/cdbbasic.html)，价格为12元/月。另外在本次Demo中，您也可以使用我已经创建好的数据库来完成本次实验，但是没办法直接登录管理界面，查看数据库中的内容。如果您已有数据库，则可在步骤三中“MySql数据库”部分替换成自身的数据库登录信息。
-本次Demo提供的数据库信息如下：
-外网地址：bj-cdb-cj9w3q53.sql.tencentcdb.com:63054
-用户名：root
-密码：tencent12345
-数据库：SCF_Demo
+由于数据库需要花钱购买，您可以选择在北京地域购买最便宜的[“云数据库MySQL入门机型”](https://cloud.tencent.com/act/event/cdbbasic.html)，价格为12元/月。
 
 ### 步骤三 创建云函数 SCF
 
@@ -39,11 +34,11 @@ import pymysql.cursors
 import logging
 
 # MySql数据库
-Host='bj-cdb-cj9w3q53.sql.tencentcdb.com'
-User='root'
-Password='tencent12345'
+Host='******' #如bj-cdb-cj9w3q53.sql.tencentcdb.com
+User='xxxxx'
+Password='xxxxx'
 Port= 63054
-DB=u'SCF_Demo'
+DB=u'******' # 如SCF_Demo
 
 # COS
 appid = ********  # 请替换为您的 APPID
